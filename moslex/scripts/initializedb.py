@@ -22,11 +22,12 @@ def iteritems(cldf, t, *cols):
 def main(args):
 
     data = Data()
-    data.add(
+    dataset = data.add(
         common.Dataset,
         moslex.__name__,
         id=moslex.__name__,
         domain='pnkv.ru',
+        name='MosLex',
 
         publisher_name="Max Planck Institute for the Science of Human History",
         publisher_place="Jena",
@@ -37,6 +38,9 @@ def main(args):
             'license_name': 'Creative Commons Attribution 4.0 International License'},
 
     )
+
+    editor = data.add(common.Contributor, 'editor', id='editor', name='Alexei Kassian')
+    common.Editor(dataset=dataset, contributor=editor)
 
 
 def prime_cache(args):
