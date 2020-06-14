@@ -6,16 +6,11 @@ from clld.interfaces import IMapMarker, IValueSet
 from moslex import models
 
 
-
-
-
 def main(global_config, **settings):
-    """ This function returns a Pyramid WSGI application.
-    """
+    settings['navbar.inverse'] = True
+
     config = Configurator(settings=settings)
     config.include('clld.web.app')
-
     config.include('clldmpg')
-
 
     return config.make_wsgi_app()
