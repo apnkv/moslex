@@ -1,0 +1,14 @@
+{
+  "languoids":
+    {
+      "Athabaskan": {
+        "author": "A. Kassian",
+        "sources": [],
+        "name": "Athabaskan",
+        "level": "group",
+        "nex_url": "/static/downloads/nex/athabaskan.nex",
+        "description_file_url": "/static/downloads/descriptions/athabaskan.html"
+      }
+    },
+  "xls_file": "ath.xls"
+}

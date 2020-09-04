@@ -1,12 +1,12 @@
-from zope.interface import implementer
+from zope.interface import implementer, Interface
 from sqlalchemy import (
     Column,
     String,
     Unicode,
+    UnicodeText,
     Integer,
     Boolean,
     ForeignKey,
-    UnicodeText,
     UniqueConstraint,
 )
 from sqlalchemy.orm import relationship, backref
@@ -15,8 +15,8 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from clld import interfaces
 from clld.db.meta import Base, CustomModelMixin, DBSession
-from clld.db.models import common
 from clld.util import DeclEnum
+from clld.db.models.common import Language, IdentifierType, Identifier, Parameter, Unit, Value
 
 
 class LanguoidLevel(DeclEnum):
@@ -34,7 +34,7 @@ class TreeClosureTable(Base):
 
 
 @implementer(interfaces.ILanguage)
-class Languoid(CustomModelMixin, common.Language):
+class Languoid(CustomModelMixin, Language):
     pk = Column(Integer, ForeignKey('language.pk'), primary_key=True)
 
     parent_pk = Column(Integer, ForeignKey('languoid.pk'))
@@ -62,10 +62,10 @@ class Languoid(CustomModelMixin, common.Language):
     level = Column(LanguoidLevel.db_type())
 
     def get_identifier_objs(self, type_):
-        if getattr(type_, 'value', type_) == common.IdentifierType.glottolog.value:
+        if getattr(type_, 'value', type_) == IdentifierType.glottolog.value:
             return [
-                common.Identifier(name=self.id, type=common.IdentifierType.glottolog.value)]
-        return common.Language.get_identifier_objs(self, type_)
+                Identifier(name=self.id, type=IdentifierType.glottolog.value)]
+        return Language.get_identifier_objs(self, type_)
 
     def get_geocoords(self):
         """
@@ -83,17 +83,25 @@ class Languoid(CustomModelMixin, common.Language):
             .filter(Languoid.father_pk == self.pk).subquery()
         return DBSession.query(
             TreeClosureTable.parent_pk,
-            common.Language.name,
-            common.Language.longitude,
-            common.Language.latitude,
-            common.Language.id) \
-            .filter(common.Language.pk == TreeClosureTable.child_pk) \
+            Language.name,
+            Language.longitude,
+            Language.latitude,
+            Language.id) \
+            .filter(Language.pk == TreeClosureTable.child_pk) \
             .filter(TreeClosureTable.parent_pk.in_(child_pks)) \
-            .filter(common.Language.latitude is not None)
+            .filter(Language.latitude is not None)
 
+
+# class IConcept(Interface):
+#     """marker"""
+#
+#
+# @implementer(IConcept)
+# class Concept(Base):
+#     pk = Column(Integer, ForeignKey('parameter.pk'), primary_key=True)
 
 @implementer(interfaces.IParameter)
-class Concept(CustomModelMixin, common.Parameter):
+class Concept(CustomModelMixin, Parameter):
     pk = Column(Integer, ForeignKey('parameter.pk'), primary_key=True)
 
     concepticon_id = Column(Integer, nullable=True)
@@ -101,6 +109,7 @@ class Concept(CustomModelMixin, common.Parameter):
 
 
 @implementer(interfaces.IValue)
-class Form(CustomModelMixin, common.Value):
+class Form(CustomModelMixin, Value):
     pk = Column(Integer, ForeignKey('value.pk'), primary_key=True)
     ipa = Column(Unicode(100))
+    cognate_class = Column(Integer, nullable=True)

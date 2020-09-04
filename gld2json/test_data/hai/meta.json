@@ -1,0 +1,14 @@
+{
+  "languoids":
+    {
+      "Haida": {
+        "author": "A. Kassian",
+        "sources": ["Enrico2003", "Enrico2005"],
+        "name": "Haida",
+        "level": "group",
+        "nex_url": "/static/downloads/nex/haida.nex",
+        "description_file_url": "/static/downloads/descriptions/haida.html"
+      }
+    },
+  "xls_file": "hai.xls"
+}

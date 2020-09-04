@@ -1,0 +1,14 @@
+{
+  "languoids":
+    {
+      "Lezgian": {
+        "author": "A. Kassian",
+        "sources": [],
+        "name": "Lezgian",
+        "level": "group",
+        "nex_url": "/static/downloads/nex/athabaskan.nex",
+        "description_file_url": "/static/downloads/descriptions/athabaskan.html"
+      }
+    },
+  "xls_file": "lez.xls"
+}

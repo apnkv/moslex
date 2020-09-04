@@ -1,1 +1,3 @@
 #
+def downloads(request):
+    return {}

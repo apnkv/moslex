@@ -1,28 +1,27 @@
 <%inherit file="app.mako"/>
 
-<%block name="head">
-    <link href="${request.static_url('moslex:static/project.css')}" rel="stylesheet">
-</%block>
-
-## <%block name="header">
-##     <a href="${request.route_url('dataset')}">
-##         <img src="${request.static_url('moslex:static/header.gif')}"/>
-##     </a>
-## </%block>
-
+##
+## define app-level blocks:
+##
 <%block name="navextra">
     <div class="nav pull-right">
         <ul class="nav navbar-nav ">
             <li id="menuitem_report">
-                <div id="comment-button-paragraph">
+                <p style="padding-top: 4px">
                     <a href="mailto:alexei.kassian@gmail.com?subject=MosLex: ${request.url}"
                        title="Comment or report error"
                        class="btn btn-default navbar-btn"
                     >Comment or report an error</a>
-                </div>
+                </p>
             </li>
         </ul>
     </div>
 </%block>
+
+## <style>
+##     .nav a {
+##         padding-top: 4px;
+##     }
+## </style>
 
 ${next.body()}

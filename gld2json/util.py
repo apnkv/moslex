@@ -14,8 +14,8 @@ logger.addHandler(stdout_handler)
 
 
 def get_lang_location_and_status_glottolog(glottocode):
-    bs = BeautifulSoup(requests.get(f'https://glottolog.org/resource/languoid/id/{glottocode}').text)
-    map_script = bs.select_one('#map-container > script').text
+    bs = BeautifulSoup(requests.get(f'https://glottolog.org/resource/languoid/id/{glottocode}').text, 'lxml')
+    map_script = bs.select_one('#map-container > script').string
 
     result = {}
 
